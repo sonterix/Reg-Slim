@@ -66,4 +66,52 @@ class User {
         return $response->withRedirect('');   
     }
 
+    public function addBalans($request, $response) {
+        $data = [
+            'user_id_author' => trim($request->getParam('user_id_author')),
+            'user_id' => trim($request->getParam('user_id')),
+            'balans' => trim($request->getParam('balans')),
+        ];
+
+        $db = new DB($this->settings);
+        $balans = $db->addBalance($data);
+
+        if($balans != 1) { 
+            return $response->withStatus(400)
+                ->withJson('Error');
+        } else {
+            return $response->withStatus(200)
+                ->withJson('Balans successfully updated');     
+        }
+    }
+
+    public function takeOffBalans($request, $response) {
+        $data = [
+            'user_id_author' => trim($request->getParam('user_id_author')),
+            'user_id' => trim($request->getParam('user_id')),
+            'balans' => trim($request->getParam('balans')),
+        ];
+
+        $db = new DB($this->settings);
+        $balans = $db->takeOffBalans($data);
+
+        if($balans != 1) { 
+            return $response->withStatus(400)
+                ->withJson('Error');
+        } else {
+            return $response->withStatus(200)
+                ->withJson('Balans successfully updated');     
+        }
+    }
+
+    public function getBalans($request, $response, $args) {
+        $user_id = $args['id'];
+
+        $db = new DB($this->settings);
+        $balans = $db->getBalans($user_id);
+
+        return $response->withStatus(200)
+            ->withJson($balans);     
+    }
+
 }

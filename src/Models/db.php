@@ -21,9 +21,9 @@ class Db {
             ->where('login', '=', $login);
 
         $stmt = $user->execute();
-        $data = $stmt->fetch();
+        $result = $stmt->fetch();
         
-        return $data;
+        return $result;
     }
 
     public function regUser($data) {
@@ -42,9 +42,59 @@ class Db {
             ->where('password', '=', $data['password']);
 
         $stmt = $user->execute();
-        $data = $stmt->fetch();
+        $result = $stmt->fetch();
         
-        return $data;
+        return $result;
+    }
+    
+    public function addBalance($data) {
+        $balans = $this->dbh->select(['balans'])
+            ->from('users')
+            ->where('id', '=', $data['user_id']);
+
+        $stmt = $balans->execute();
+        $result = $stmt->fetch();
+
+        $newBalans = $result['balans'] + $data['balans'];
+
+        $update = $this->dbh->update(['balans' => $newBalans])
+            ->table('users')
+            ->where('id', '=', $data['user_id']);
+
+        $resultUpdate = $update->execute();
+        
+        return $resultUpdate;
+    }
+
+    public function takeOffBalans($data) {
+        $balans = $this->dbh->select(['balans'])
+            ->from('users')
+            ->where('id', '=', $data['user_id']);
+
+        $stmt = $balans->execute();
+        $result = $stmt->fetch();
+
+        $newBalans = $result['balans'] - $data['balans'];
+
+        $update = $this->dbh->update(['balans' => $newBalans])
+            ->table('users')
+            ->where('id', '=', $data['user_id']);
+
+        $resultUpdate = $update->execute();
+        
+        return $resultUpdate;
+    }
+
+    
+    public function getBalans($user_id) {
+        $balans = $this->dbh->select(['balans'])
+            ->from('users')
+            ->where('id', '=', $user_id);
+
+        $stmt = $balans->execute();
+        $result = $stmt->fetch();
+        
+        return $result;
     }
 
 }

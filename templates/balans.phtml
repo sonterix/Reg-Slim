@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+</head>
+<body>
+
+    <h1>Add to Balans</h1>
+    <form action="addBalans" method="POST">
+        <input type="number" name="user_id_author" placeholder="Author ID">
+        <input type="number" name="user_id" placeholder="User ID">
+        <input type="number" name="balans" placeholder="Add to Balans">
+        <input type="submit">
+    </form>
+    
+    <br>
+
+    <h1>Take off Balans</h1>    
+    <form action="takeOffBalans" method="POST">
+        <input type="number" name="user_id_author" placeholder="Author ID">
+        <input type="number" name="user_id" placeholder="User ID">
+        <input type="number" name="balans" placeholder="Take off Balans">
+        <input type="submit">
+    </form>
+
+</body>
+</html>
