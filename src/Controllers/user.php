@@ -69,15 +69,16 @@ class User {
 
     public function addBalans($request, $response) {
         $data = [
-            'user_id_author' => trim($request->getParam('user_id_author')),
+            'id' => trim($request->getParam('user_id_author')),
             'user_id' => trim($request->getParam('user_id')),
             'balans' => trim($request->getParam('balans')),
         ];
 
         $db = new DB($this->settings);
-        $balans = $db->addBalance($data);
+        $balansAdd = $db->addBalance($data);
+        $balansTakeOff = $db->takeOffBalans($data);
 
-        if($balans != 1) { 
+        if($balansAdd != 1 && $balansTakeOff != 1) { 
             return $response->withStatus(400)
                 ->withJson('Error');
         } else {
@@ -88,8 +89,7 @@ class User {
 
     public function takeOffBalans($request, $response) {
         $data = [
-            'user_id_author' => trim($request->getParam('user_id_author')),
-            'user_id' => trim($request->getParam('user_id')),
+            'id' => trim($request->getParam('user_id')),
             'balans' => trim($request->getParam('balans')),
         ];
 

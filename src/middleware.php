@@ -27,3 +27,13 @@ $sessionCheck = function($request, $response, $next) {
     $response = $next($request, $response);
     return $response;
 };
+
+$sessionValidation = function($request, $response, $next) {
+    if(!$_SESSION['authorized']) {
+        return $response->withStatus(403)
+            ->withJson('You are not logined');
+    }
+
+    $response = $next($request, $response);
+    return $response;
+};

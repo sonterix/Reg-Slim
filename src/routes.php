@@ -41,11 +41,11 @@ $app->get('/balans', function (Request $request, Response $response) {
     $this->logger->info("Login page '/balans' route");
     // render index view
     return $this->renderer->render($response, 'balans.phtml');
-});
+})->add($sessionValidation);
 
-$app->post('/addBalans', 'App\Controller\user:addBalans')->add($validationData);
+$app->post('/addBalans', 'App\Controller\user:addBalans')->add($validationData)->add($sessionValidation);
 
-$app->post('/takeOffBalans', 'App\Controller\user:takeOffBalans')->add($validationData);
+$app->post('/takeOffBalans', 'App\Controller\user:takeOffBalans')->add($validationData)->add($sessionValidation);
 
 $app->get('/getBalans/{id}', 'App\Controller\user:getBalans');
 

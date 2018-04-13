@@ -10,7 +10,7 @@
 
     <h1>Add to Balans</h1>
     <form action="addBalans" method="POST">
-        <input type="number" name="user_id_author" placeholder="Author ID">
+        <input type="number" name="user_id_author" value="<?= $_SESSION['authorized']; ?>" placeholder="Author ID">
         <input type="number" name="user_id" placeholder="User ID">
         <input type="number" name="balans" placeholder="Add to Balans">
         <input type="submit">
@@ -20,7 +20,6 @@
 
     <h1>Take off Balans</h1>    
     <form action="takeOffBalans" method="POST">
-        <input type="number" name="user_id_author" placeholder="Author ID">
         <input type="number" name="user_id" placeholder="User ID">
         <input type="number" name="balans" placeholder="Take off Balans">
         <input type="submit">

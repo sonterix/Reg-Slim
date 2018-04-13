@@ -62,9 +62,6 @@ class Db {
             ->where('id', '=', $data['user_id']);
 
         $resultUpdate = $update->execute();
-
-        // write log
-        $this->writeBalansLog($data['user_id'], $data['balans'], $newBalans, 'add to balans');
         
         return $resultUpdate;
     }
@@ -72,7 +69,7 @@ class Db {
     public function takeOffBalans($data) {
         $balans = $this->dbh->select(['balans'])
             ->from('users')
-            ->where('id', '=', $data['user_id']);
+            ->where('id', '=', $data['id']);
 
         $stmt = $balans->execute();
         $result = $stmt->fetch();
@@ -81,12 +78,9 @@ class Db {
 
         $update = $this->dbh->update(['balans' => $newBalans])
             ->table('users')
-            ->where('id', '=', $data['user_id']);
+            ->where('id', '=', $data['id']);
 
         $resultUpdate = $update->execute();
-
-        // write log
-        $this->writeBalansLog($data['user_id'], $data['balans'], $newBalans, 'take off balans');
         
         return $resultUpdate;
     }
