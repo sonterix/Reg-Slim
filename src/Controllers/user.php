@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\DB as DB;
+use App\Model\CURL as CURL;
 
 class User {
 
@@ -112,6 +113,21 @@ class User {
 
         return $response->withStatus(200)
             ->withJson($balans);     
+    }
+
+    public function getDistance($request, $response) {
+        $data = [
+            'apiKey' => 'AIzaSyAwQ9RPK8fNSMBNYmWtlbe1qrI8stfqjFw',
+            'from' => str_replace(" ", "", $request->getParam('from')),
+            'to' => str_replace(" ", "", $request->getParam('to')),
+            'mode' => ['driving', 'walking']
+        ];
+        
+        $curl = new CURL();
+        $result = $curl->getDistanceTwoDots($data);
+
+        return $response->withStatus(200)
+        ->withJson($result); 
     }
 
 }

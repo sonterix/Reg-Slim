@@ -4,12 +4,15 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 // Routes
+
 $app->get('/', function (Request $request, Response $response) {
     // log message
     $this->logger->info("Home page '/' route");
     // render index view
     return $this->renderer->render($response, 'index.phtml');
 });
+
+// Autorisation
 
 $app->get('/registration', function (Request $request, Response $response) {
     // log message
@@ -18,7 +21,7 @@ $app->get('/registration', function (Request $request, Response $response) {
     return $this->renderer->render($response, 'registration.phtml');
 })->add($sessionCheck);
 
-$app->post('/registration', 'App\Controller\user:registration')->add($formValidation)->add($sessionCheck);
+$app->post('/registration', 'App\Controller\user:registration')->add($validationData)->add($sessionCheck);
 
 $app->get('/login', function (Request $request, Response $response) {
     // log message
@@ -27,9 +30,11 @@ $app->get('/login', function (Request $request, Response $response) {
     return $this->renderer->render($response, 'login.phtml');
 })->add($sessionCheck);
 
-$app->post('/login', 'App\Controller\user:login')->add($formValidation)->add($sessionCheck);
+$app->post('/login', 'App\Controller\user:login')->add($validationData)->add($sessionCheck);
 
 $app->get('/logout', 'App\Controller\user:logout');
+
+// Balans
 
 $app->get('/balans', function (Request $request, Response $response) {
     // log message
@@ -38,9 +43,21 @@ $app->get('/balans', function (Request $request, Response $response) {
     return $this->renderer->render($response, 'balans.phtml');
 });
 
-$app->post('/addBalans', 'App\Controller\user:addBalans')->add($balancValidation);
+$app->post('/addBalans', 'App\Controller\user:addBalans')->add($validationData);
 
-$app->post('/takeOffBalans', 'App\Controller\user:takeOffBalans')->add($balancValidation);
+$app->post('/takeOffBalans', 'App\Controller\user:takeOffBalans')->add($validationData);
 
 $app->get('/getBalans/{id}', 'App\Controller\user:getBalans');
+
+// Map
+
+$app->get('/map', function (Request $request, Response $response) {
+    // log message
+    $this->logger->info("Login page '/map' route");
+    // render index view
+    return $this->renderer->render($response, 'map.phtml');
+});
+
+$app->post('/getDistance', 'App\Controller\user:getDistance')->add($validationData);
+
 
