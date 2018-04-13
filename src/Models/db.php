@@ -62,6 +62,9 @@ class Db {
             ->where('id', '=', $data['user_id']);
 
         $resultUpdate = $update->execute();
+
+        // write log
+        $this->writeBalansLog($data['user_id'], $data['balans'], $newBalans, 'add to balans');
         
         return $resultUpdate;
     }
@@ -81,6 +84,9 @@ class Db {
             ->where('id', '=', $data['user_id']);
 
         $resultUpdate = $update->execute();
+
+        // write log
+        $this->writeBalansLog($data['user_id'], $data['balans'], $newBalans, 'take off balans');
         
         return $resultUpdate;
     }
@@ -97,4 +103,11 @@ class Db {
         return $result;
     }
 
+    public function writeBalansLog($user_id, $value, $currentValue, $action) {
+        $log = $this->dbh->insert(['user_id', 'value', 'current_value', 'action'])
+            ->into('balans_log')
+            ->values([$user_id, $value, $currentValue, $action]);
+
+        $log->execute();
+    }
 }
