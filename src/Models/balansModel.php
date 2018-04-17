@@ -1,7 +1,7 @@
 <?php
 namespace App\Model;
 
-class Db {
+class BalansModel {
     private $dbh;
     private $settings;
 
@@ -15,38 +15,6 @@ class Db {
         $this->dbh = new \Slim\PDO\Database($dsn, $this->settings['user'], $this->settings['pass']);
     }
 
-    public function getUser($login) {
-        $user = $this->dbh->select()
-            ->from('users')
-            ->where('login', '=', $login);
-
-        $stmt = $user->execute();
-        $result = $stmt->fetch();
-        
-        return $result;
-    }
-
-    public function regUser($data) {
-        $user = $this->dbh->insert()
-            ->into('users')
-            ->columns(['login', 'password'])
-            ->values([$data['login'], $data['password']]);
-        
-        $user->execute();
-    }
-
-    public function userLogin($data) {
-        $user = $this->dbh->select()
-            ->from('users')
-            ->where('login', '=', $data['login'])
-            ->where('password', '=', $data['password']);
-
-        $stmt = $user->execute();
-        $result = $stmt->fetch();
-        
-        return $result;
-    }
-    
     public function addBalance($data) {
         $balans = $this->dbh->select(['balans'])
             ->from('users')
@@ -96,12 +64,5 @@ class Db {
         
         return $result;
     }
-
-    public function writeBalansLog($user_id, $value, $currentValue, $action) {
-        $log = $this->dbh->insert(['user_id', 'value', 'current_value', 'action'])
-            ->into('balans_log')
-            ->values([$user_id, $value, $currentValue, $action]);
-
-        $log->execute();
-    }
+    
 }

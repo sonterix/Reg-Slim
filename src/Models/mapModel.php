@@ -1,7 +1,7 @@
 <?php
 namespace App\Model;
 
-class Curl {
+class MapModel {
     private $dbh;
     private $settings;
 
